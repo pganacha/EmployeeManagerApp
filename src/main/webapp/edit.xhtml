@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" 
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head><title>Edit Employee</title></h:head>
 <h:body>
+<f:metadata>
+   <f:viewParam name="id" value="#{employeeController.employeeId}" />
+   <f:viewAction action="#{employeeController.init}" />
+</f:metadata>
+
   <h:form>
     <h:panelGrid columns="2">
 	  <h:outputLabel value="Name:" for="name"/>

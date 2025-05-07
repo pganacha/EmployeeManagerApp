@@ -24,6 +24,7 @@ public class EmployeeService {
 		 return em.createQuery("SELECT e from Employee e", Employee.class).getResultList();
 	}
 	
+	
 	@Transactional
 	public void save(Employee employee) {
 		/* EntityManager em = emf.createEntityManager();

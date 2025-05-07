@@ -4,17 +4,21 @@
 	  xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head><title>Employee List</title></h:head>
 <h:body>
-  <h:form>
-  <h:dataTable value="#{employeeController.employees}" var="emp" border="1">
+<h2>Employee List</h2>
+<h:dataTable value="#{employeeController.allEmployees}" var="emp" border="1">
+    <h:column><f:facet name="header">ID</f:facet>#{emp.id}</h:column>
     <h:column><f:facet name="header">Name</f:facet>#{emp.name}</h:column>
 	<h:column><f:facet name="header">Position</f:facet>#{emp.position}</h:column>
 	<h:column><f:facet name="header">Salary</f:facet>#{emp.salary}</h:column>
 	<h:column>
-	  <h:commandLink value="Edit" action="#{employeeController.edit(emp)}"/>
-	  <h:commandLink value="Delete" action="#{employeeController.delete(emp)}"/>
+	  <!-- <h:commandLink value="Edit" action="#{employeeController.edit(emp)}"/>
+	  <h:commandLink value="Delete" action="#{employeeController.delete(emp)}"/> -->
+	  <f:facet name="header">Action</f:facet>
+	  <h:link outcome="edit.xhtml" value="Edit">
+	     <f:param name="id" value="#{emp.id}" />
+	  </h:link>
 	</h:column>
-  </h:dataTable>
-  <h:commandLink value="Add New" action="edit.xhtml"/>
-  </h:form>
+</h:dataTable>
+  <h:link value="Add Employee" outcome="index.xhtml"/>
 </h:body>
 </html>

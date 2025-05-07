@@ -6,6 +6,7 @@ import com.jsf.sample.employeemanager.service.EmployeeService;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -14,11 +15,13 @@ import java.util.List;
 
 
 @Named
-@SessionScoped
+/* @SessionScoped */
+@ViewScoped
 public class EmployeeController implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private List<Employee> employees;
 	private Employee currentEmployee;
+	private Long employeeId;
 	/* private Employee currentEmployee = new Employee(); */
 	/* private EmployeeService employeeService = new EmployeeService(); */
 	
@@ -27,21 +30,26 @@ public class EmployeeController implements Serializable {
 	
 	@PostConstruct
 	public void init() {
-		employees = employeeService.findAll();
+		/* employees = employeeService.findAll(); */
 		
-		if (employees == null || employees.isEmpty()) {
+		/* if (employees == null || employees.isEmpty()) {
 			currentEmployee = new Employee();
 			try {
 				FacesContext.getCurrentInstance().getExternalContext().redirect("edit.xhtml");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}	
+		} */	
+		if (employeeId != null) {
+		    currentEmployee = employeeService.findById(employeeId);
+		} else {
+		    currentEmployee = new Employee();
+		}
 	}
 	
 	public String save() {
 		employeeService.save(currentEmployee);
-		employees = employeeService.findAll();
+		/* employees = employeeService.findAll(); */
 		currentEmployee = new Employee();
 		return "list.xhtml?faces-redirect=true";
 	}
@@ -54,9 +62,18 @@ public class EmployeeController implements Serializable {
 		employeeService.delete(employee.getId());
 		employees = employeeService.findAll();
 	}
+	
+	public Long getEmployeeId() {
+	     return employeeId;
+	}
+	
+	public void setEmployeeId(Long employeeId) {
+	     this.employeeId = employeeId;
+	}
 
-    public List<Employee> getEmployees() {
-         return employees;		
+    public List<Employee> getAllEmployees() {
+         /* return employees; */
+         return employeeService.findAll();		 
 	}
 	
 	public Employee getCurrentEmployee() {
